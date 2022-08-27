@@ -1,0 +1,53 @@
+# **Here are some more ways u can bypass IDORs:**
+
+1. **Parameter Pollution**
+
+By supplying multiple values for a single parameter, one may create a scenario where idor can be exploited. Change request from:
+
+```
+GET /api/card?custom_id=<attacker_id>
+```
+
+to:
+
+```
+GET /api/card?custom_id=<attacker_id>&custom_id=<victm's_is>
+```
+
+**2. Appending special characters and random strings**
+
+Simply replacing ids might get you a 401, access denied or invalid request. So, in this case appending special characters **(/)** or strings such as **%20, %09, %0b, %0c, %1c, %1d, %1e, %1f** etc. might give you an Idor. Turn request from
+
+```
+GET /profile/update/12345
+```
+
+to
+
+```
+GET /profile/update/12345%20
+```
+
+This may break the application’s logic.
+
+**3. Changing the request method**
+
+If one HTTP request method doesn’t work, you can try plenty of others instead: GET, POST, PUT, DELETE, PATCH, and so on.
+
+**4.Placing ids to requests without ids**
+
+Even if the request URL is not using input parameters, place parameters to each request and observe whether it is making any difference. For example, if this request displays all your card details:
+
+```
+GET /api/card
+```
+
+What will happen if the attacker appends the user id as mentioned below?
+
+```
+GET /api/card?custom_id=<victim_id>
+```
+
+Even if web applications sometime hide information related to parameters, by observing the adjacent requests, you can add ids randomly.
+
+# **Ending:**
